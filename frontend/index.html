@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head><title>VA Dashboard</title></head>
+<body>
+<h1>GCP VA Dashboard</h1>
+<button onclick="load()">Load Report</button>
+<pre id="out"></pre>
+<script>
+function load(){
+ fetch('/api/report').then(r=>r.json()).then(d=>{
+  document.getElementById('out').innerText=JSON.stringify(d,null,2)
+ })
+}
+</script>
+</body>
+</html>
