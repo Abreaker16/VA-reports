@@ -14,9 +14,9 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="GCP VA Platform",
-    description="Vulnerability Assessment Platform for GCP Security Command Center",
-    version="1.0.0",
+    title="Multi-Cloud VA Platform",
+    description="Vulnerability Assessment Platform for GCP, AWS, and Azure security services",
+    version="2.0.0",
     lifespan=lifespan
 )
 

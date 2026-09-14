@@ -1,15 +1,56 @@
 <!DOCTYPE html>
 <html>
-<head><title>VA Dashboard</title></head>
+<head>
+    <title>Multi-Cloud VA Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        .controls { margin: 20px 0; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow: auto; }
+        .cloud-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .gcp { border-left: 4px solid #4285F4; }
+        .aws { border-left: 4px solid #FF9900; }
+        .azure { border-left: 4px solid #0078D4; }
+    </style>
+</head>
 <body>
-<h1>GCP VA Dashboard</h1>
-<button onclick="load()">Load Report</button>
-<pre id="out"></pre>
+<h1>🌐 Multi-Cloud Vulnerability Assessment Dashboard</h1>
+
+<div class="controls">
+    <h3>Select Report Type:</h3>
+    <button onclick="loadReport('all')">All Clouds</button>
+    <button onclick="loadReport('gcp')">GCP Only</button>
+    <button onclick="loadReport('aws')">AWS Only</button>
+    <button onclick="loadReport('azure')">Azure Only</button>
+</div>
+
+<div id="output"></div>
+
 <script>
-function load(){
- fetch('/api/report').then(r=>r.json()).then(d=>{
-  document.getElementById('out').innerText=JSON.stringify(d,null,2)
- })
+function loadReport(cloud) {
+    const output = document.getElementById('output');
+    output.innerHTML = '<p>Loading...</p>';
+    
+    let url = '/api/health';
+    if (cloud === 'gcp') {
+        url = '/api/report/gcp?org_id=YOUR_ORG_ID';
+    } else if (cloud === 'aws') {
+        url = '/api/report/aws?region=us-east-1';
+    } else if (cloud === 'azure') {
+        url = '/api/report/azure?subscription_id=YOUR_SUBSCRIPTION_ID';
+    } else if (cloud === 'all') {
+        url = '/api/report/all?aws_region=us-east-1';
+    }
+    
+    fetch(url)
+        .then(r => r.json())
+        .then(d => {
+            output.innerHTML = '<pre>' + JSON.stringify(d, null, 2) + '</pre>';
+        })
+        .catch(err => {
+            output.innerHTML = '<p style="color: red;">Error: ' + err.message + '</p>';
+        });
 }
 </script>
 </body>

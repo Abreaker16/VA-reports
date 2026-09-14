@@ -1,0 +1,12 @@
+# .gcloudignore - Files to exclude from Cloud Build context
+.git
+.gitignore
+*.md
+docker-compose.yml
+terraform/
+frontend/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+.venv/
