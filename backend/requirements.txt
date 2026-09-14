@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+google-cloud-securitycenter
+boto3
+azure-identity
+azure-mgmt-security
